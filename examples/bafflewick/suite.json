@@ -1,0 +1,1 @@
+{"name":"Bafflewick retrieval gate","threshold":1.0,"cases":[{"id":"runbook","required_terms":["insurer"],"require_citations":true},{"id":"unknown","require_refusal":true},{"id":"privilege","forbidden_terms":["legal direction"]}]}

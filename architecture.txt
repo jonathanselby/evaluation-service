@@ -1,0 +1,25 @@
+EVALUATION SERVICE V0.1
+
+EVALUATION SUITE          CANDIDATE RESULTS
+      |                         |
+      +-----------+-------------+
+                  v
+          +---------------+
+          | case evaluator |
+          +-------+-------+
+                  |
+                  v
+          +---------------+
+          | weighted score|
+          +-------+-------+
+                  |
+            +-----+------+
+            | threshold  |
+            | regression |
+            +-----+------+
+                  |
+          +-------+--------+
+          v                v
+        PASS              FAIL
+
+Rule: Measure the useful behaviour you claim. A regression is a build failure, not a slide.
