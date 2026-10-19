@@ -6,7 +6,7 @@
 
 **Measure the useful behaviour you claim. A regression is a build failure, not a slide.**
 
-`evaluation-service` is a deliberately small Go command-line component for scoring recorded system outputs against a fixed evaluation set and failing a regression gate deterministically. It is independently usable outside CRAB.
+`evaluation-service` is a deliberately small Go command-line component for scoring recorded system outputs against a fixed evaluation set and failing a regression gate deterministically.
 
 ## Why it exists
 
