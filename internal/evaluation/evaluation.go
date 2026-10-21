@@ -45,18 +45,43 @@ func Evaluate(s Suite, cands []Candidate) (Result, error) {
 	if s.Threshold < 0 || s.Threshold > 1 {
 		return Result{}, errors.New("threshold must be between 0 and 1")
 	}
+	if s.MaxRegression < 0 {
+		return Result{}, errors.New("max_regression cannot be negative")
+	}
+	if s.Baseline != nil && (*s.Baseline < 0 || *s.Baseline > 1) {
+		return Result{}, errors.New("baseline must be between 0 and 1")
+	}
+
+	caseIDs := map[string]bool{}
+	for _, tc := range s.Cases {
+		if strings.TrimSpace(tc.ID) == "" {
+			return Result{}, errors.New("case id required")
+		}
+		if caseIDs[tc.ID] {
+			return Result{}, fmt.Errorf("duplicate case id %q", tc.ID)
+		}
+		caseIDs[tc.ID] = true
+		if tc.Weight < 0 {
+			return Result{}, fmt.Errorf("case %q weight cannot be negative", tc.ID)
+		}
+	}
+
 	m := map[string]Candidate{}
 	for _, c := range cands {
+		if strings.TrimSpace(c.ID) == "" {
+			return Result{}, errors.New("candidate id required")
+		}
+		if _, exists := m[c.ID]; exists {
+			return Result{}, fmt.Errorf("duplicate candidate id %q", c.ID)
+		}
 		m[c.ID] = c
 	}
+
 	var got, total float64
 	var cr []CaseResult
 	for _, tc := range s.Cases {
-		if tc.ID == "" {
-			return Result{}, errors.New("case id required")
-		}
 		w := tc.Weight
-		if w <= 0 {
+		if w == 0 {
 			w = 1
 		}
 		total += w
